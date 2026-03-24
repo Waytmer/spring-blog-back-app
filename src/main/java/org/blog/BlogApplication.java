@@ -1,5 +1,6 @@
 package org.blog;
 
+import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletContainerInitializer;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
@@ -19,6 +20,8 @@ public class BlogApplication implements ServletContainerInitializer {
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
 
         ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", dispatcherServlet);
+        registration.setMultipartConfig(new MultipartConfigElement("/", 5242880,
+                20971520, 0));
         registration.setLoadOnStartup(1);
         registration.addMapping("/");
     }
