@@ -4,5 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
+    <include file="changes/create-post-table.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-comment-table.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-tag-table.xml" relativeToChangelogFile="true"/>
+    <include file="changes/create-post-tag-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

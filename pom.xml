@@ -36,6 +36,13 @@
         <jackson-annotations.version>2.20</jackson-annotations.version>
 
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
+
+        <db.url>jdbc:postgresql://${db.host}:${db.port}/${db.database}</db.url>
+        <db.host>.</db.host>
+        <db.port>.</db.port>
+        <db.database>.</db.database>
+        <db.username>.</db.username>
+        <db.password>.</db.password>
     </properties>
 
     <dependencies>
@@ -143,6 +150,29 @@
         </dependency>
 
     </dependencies>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <db.host>localhost</db.host>
+                <db.port>5432</db.port>
+                <db.database>blog</db.database>
+                <db.username>postgres</db.username>
+                <db.password>12345678</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <db.host>localhost</db.host>
+                <db.port>5432</db.port>
+                <db.database>blog</db.database>
+                <db.username>postgres</db.username>
+                <db.password>12345678</db.password>
+                <maven.test.skip>false</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -184,16 +214,28 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase-core.version}</version>
+
+                <configuration>
+                    <changeLogFile>src/main/resources/db.changelog/changelog-master.xml</changeLogFile>
+                    <url>${db.url}</url>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                    <driver>org.postgresql.Driver</driver>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postrgesql.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>test</id>
-            <properties>
-                <maven.test.skip>false</maven.test.skip>
-            </properties>
-        </profile>
-    </profiles>
 </project>
 
