@@ -16,7 +16,7 @@ public class Post {
     private Long id;
 
     @Column
-    private Long title;
+    private String title;
 
     @Column
     private String text;
